@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Alarm</title>
+</head>
+
+<body>
+    <h1>Alarm</h1>
+
+    <div id="countdown"></div>
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+
+    <script>
+        var secondsRemaining = 0;
+        var countdownInterval;
+
+        function startCountdown(seconds) {
+            secondsRemaining = seconds;
+            updateCountdown();
+
+            var startButton = document.getElementById('startButton');
+            startButton.disabled = true;
+
+            countdownInterval = setInterval(function () {
+                secondsRemaining--;
+                updateCountdown();
+
+                if (secondsRemaining <= 0) {
+                    stopCountdown();
+                    alert('Alarm!');
+                }
+            }, 1000);
+        }
+
+        function stopCountdown() {
+            clearInterval(countdownInterval);
+            var startButton = document.getElementById('startButton');
+            startButton.disabled = false;
+        }
+
+        function updateCountdown() {
+            var countdownElement = document.getElementById('countdown');
+            countdownElement.textContent = secondsRemaining + ' seconds';
+        }
+
+        var startButton = document.getElementById('startButton');
+        startButton.addEventListener('click', function () {
+            var secondsInput = parseInt(prompt('Enter the number of seconds for the alarm:'));
+            if (!isNaN(secondsInput) && secondsInput > 0) {
+                startCountdown(secondsInput);
+            }
+        });
+
+        var stopButton = document.getElementById('stopButton');
+        stopButton.addEventListener('click', stopCountdown);
+    </script>
+</body>
+
+</html>
